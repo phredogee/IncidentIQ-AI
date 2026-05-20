@@ -38,13 +38,50 @@ col2.metric("Open Incidents", metrics["open_incidents"])
 col3.metric("High Severity", metrics["high_severity"])
 col4.metric("Resolved", metrics["resolved_incidents"])
 
+st.sidebar.header("Filters")
+
+selected_categories = st.sidebar.multiselect(
+    "Category",
+    options=sorted(df["category"].unique()),
+    default=sorted(df["category"].unique())
+)
+
+selected_severities = st.sidebar.multiselect(
+    "Severity",
+    options=sorted(df["severity"].unique()),
+    default=sorted(df["severity"].unique())
+)
+
+selected_statuses = st.sidebar.multiselect(
+    "Status",
+    options=sorted(df["status"].unique()),
+    default=sorted(df["status"].unique())
+)
+
+search_term = st.sidebar.text_input("Search incident descriptions")
+
+filtered_df = df[
+    (df["category"].isin(selected_categories)) &
+    (df["severity"].isin(selected_severities)) &
+    (df["status"].isin(selected_statuses))
+]
+
+if search_term:
+    filtered_df = filtered_df[
+        filtered_df["description"].str.contains(search_term, case=False, na=False)
+    ]
+
+if filtered_df.empty:
+    st.warning("No incidents match the selected filters.")
+    st.stop()
+
 st.divider()
 
 left_col, right_col = st.columns(2)
 
 with left_col:
     st.subheader("Incidents by Category")
-    category_counts = df["category"].value_counts().reset_index()
+    category_counts = filtered_df["category"].value_counts().reset_index()
     category_counts.columns = ["Category", "Count"]
 
     fig_category = px.bar(
@@ -58,7 +95,7 @@ with left_col:
 
 with right_col:
     st.subheader("Incidents by Severity")
-    severity_counts = df["severity"].value_counts().reset_index()
+    severity_counts = filtered_df["severity"].value_counts().reset_index()
     severity_counts.columns = ["Severity", "Count"]
 
     fig_severity = px.pie(
@@ -82,8 +119,8 @@ st.dataframe(keyword_df, use_container_width=True)
 
 st.divider()
 
-top_category = df["category"].value_counts().idxmax()
-top_severity = df["severity"].value_counts().idxmax()
+top_category = filtered_df["category"].value_counts().idxmax()
+top_severity = filtered_df["severity"].value_counts().idxmax()
 
 summary = generate_summary(metrics, top_category, top_severity, top_keywords)
 
@@ -93,4 +130,4 @@ st.info(summary)
 st.divider()
 
 st.subheader("Incident Data")
-st.dataframe(df, use_container_width=True)
+st.dataframe(filtered_df, use_container_width=True)
