@@ -34,15 +34,15 @@ AI-powered IT incident intelligence dashboard for analyzing operational trends, 
 
 ---
 
-### Severity Analytics
+### Incident Table
 
-![Severity Chart](screenshots/severity-chart.png)
+![Severity Chart](screenshots/incident-table.png)
 
 ---
 
-### Recommendations Engine
+### Keyword Analysis
 
-![Recommendations](screenshots/recommendations.png)
+![Recommendations](screenshots/keyword-analysis.png)
 
 ---
 
