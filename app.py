@@ -4,7 +4,7 @@ import plotly.express as px
 
 from src.analyzer import load_incidents, get_summary_metrics, get_top_keywords
 from src.summarizer import generate_summary
-
+from src.similarity import find_similar_incidents
 
 st.set_page_config(
     page_title="IncidentIQ-AI",
@@ -117,6 +117,30 @@ keyword_df = pd.DataFrame(top_keywords, columns=["Keyword", "Count"])
 
 st.dataframe(keyword_df, use_container_width=True)
 
+st.divider()
+
+st.subheader("Similar Incident Detection")
+
+selected_ticket = st.selectbox(
+    "Select an incident to find similar tickets",
+    options=filtered_df["ticket_id"].tolist()
+)
+
+similar_incidents = find_similar_incidents(
+    filtered_df.reset_index(drop=True),
+    selected_ticket,
+    top_n=3
+)
+
+if similar_incidents.empty:
+    st.info("No similar incidents found.")
+else:
+    st.dataframe(
+        similar_incidents[
+            ["ticket_id", "category", "severity", "description", "status", "similarity_score"]
+        ],
+        use_container_width=True
+    )
 st.divider()
 
 top_category = filtered_df["category"].value_counts().idxmax()
