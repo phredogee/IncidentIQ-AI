@@ -1,13 +1,16 @@
 # IncidentIQ-AI
 
-AI-powered IT incident intelligence platform for ticket summarization, anomaly detection, and operational insights.
+IncidentIQ-AI is an AI-powered IT incident intelligence dashboard that analyzes support tickets, identifies recurring issues, and summarizes operational trends.
 
 ## Current Status
-Early development (MVP phase)
+MVP in development.
 
-## Planned Features
-- Ticket summarization
-- Similar incident detection
-- Embedding-based search
-- Dashboard analytics
-- AI remediation suggestions
+## Features
+- Incident CSV ingestion
+- Category and severity breakdowns
+- Recurring issue detection
+- Dashboard visualizations
+- AI-style executive summary
+
+## Tech Stack
+Python, Streamlit, Pandas, scikit-learn, Plotly
