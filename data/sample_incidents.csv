@@ -1,0 +1,11 @@
+ticket_id,category,severity,description,status
+INC001,Network,High,Users cannot access VPN from remote locations,Open
+INC002,Email,Medium,Outlook freezes when opening attachments,Resolved
+INC003,Hardware,Low,User laptop battery drains quickly,Open
+INC004,Network,High,Multiple users report Wi-Fi drops in Building B,In Progress
+INC005,Access,Medium,Employee unable to access shared drive,Open
+INC006,Network,High,VPN disconnects every 10 minutes for remote users,Open
+INC007,Software,Medium,Application crashes after latest update,In Progress
+INC008,Email,Low,User unable to send email with large attachment,Resolved
+INC009,Access,High,New employee cannot access required systems,Open
+INC010,Hardware,Medium,Docking station not recognizing monitor,Resolved
