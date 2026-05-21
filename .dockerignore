@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.git/
+.github/
+.venv/
+phredenv/
+.pytest_cache/
+.coverage
+tests/
+screenshots/
+.streamlit/secrets.toml
+*.md
+!README.md
+.env
+.DS_Store

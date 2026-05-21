@@ -4,4 +4,4 @@ __pycache__/
 phredenv/
 .env
 .DS_Store
-.streamlit/
+.streamlit/secrets.toml
