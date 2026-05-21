@@ -5,7 +5,7 @@
 
 AI-powered IT incident intelligence dashboard. Ingests support tickets, surfaces operational trends, detects volume anomalies, predicts severity for new tickets, and generates a Claude-written executive summary on demand.
 
-**Live demo:** [incidentiq-ai.streamlit.app](https://incidentiq-ai.streamlit.app/)
+### → [Open the live demo](https://incidentiq-ai.streamlit.app/)
 
 ---
 
