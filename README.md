@@ -1,8 +1,11 @@
 # IncidentIQ-AI
 
 [![CI](https://github.com/phredogee/IncidentIQ-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/phredogee/IncidentIQ-AI/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/demo-streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://incidentiq-ai.streamlit.app/)
 
 AI-powered IT incident intelligence dashboard. Ingests support tickets, surfaces operational trends, detects volume anomalies, predicts severity for new tickets, and generates a Claude-written executive summary on demand.
+
+**Live demo:** [incidentiq-ai.streamlit.app](https://incidentiq-ai.streamlit.app/)
 
 ---
 
