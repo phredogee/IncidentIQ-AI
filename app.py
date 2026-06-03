@@ -16,7 +16,7 @@ from src.analyzer import (
     mttr_summary,
 )
 from src.classifier import predict_severity, train_classifier
-from src.summarizer import generate_summary
+from src.summarizer import generate_executive_summary
 from src.similarity import find_similar_incidents
 
 st.set_page_config(
@@ -25,21 +25,19 @@ st.set_page_config(
     layout="wide"
 )
 
-# Forward Streamlit secrets into the env so the Anthropic client picks them up
+# Forward Streamlit secrets into the env so the Deepseek client picks them up
 # both locally (.streamlit/secrets.toml) and on Streamlit Community Cloud.
 try:
-    api_key = st.secrets.get("ANTHROPIC_API_KEY")
+    api_key = st.secrets.get("DEEPSEEK_API_KEY")
     if api_key:
-        os.environ["ANTHROPIC_API_KEY"] = api_key
+        os.environ["DEEPSEEK_API_KEY"] = api_key
 except Exception:
     pass
 
-
-@st.cache_data(show_spinner=False)
+# Remove the old @st.cache_data line 38 completely
 def _cached_summary(metrics, top_category, top_severity, top_keywords, sample_csv):
     sample_df = pd.read_csv(io.StringIO(sample_csv))
-    return generate_summary(metrics, top_category, top_severity, top_keywords, sample_df)
-
+    return generate_executive_summary(metrics, top_category, top_severity, top_keywords, sample_csv)
 
 @st.cache_resource(show_spinner="Training severity classifier…")
 def _train_classifier(data_csv: str):
@@ -292,7 +290,7 @@ top_category = filtered_df["category"].value_counts().idxmax()
 top_severity = filtered_df["severity"].value_counts().idxmax()
 
 st.subheader("AI Executive Summary")
-with st.spinner("Generating summary with Claude…"):
+with st.spinner("Generating summary with DeepSeek"):
     summary = _cached_summary(
         metrics,
         top_category,

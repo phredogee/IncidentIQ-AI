@@ -1,18 +1,25 @@
-import os
+import pytest
+from unittest.mock import patch, MagicMock
+from src.summarizer import generate_executive_summary
 
-from src.summarizer import generate_summary
-
-
-def test_summarizer_fallback_when_no_api_key(monkeypatch, sample_df):
-    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-    metrics = {
-        "total_incidents": 10,
-        "open_incidents": 1,
-        "resolved_incidents": 8,
-        "high_severity": 1,
-    }
-    summary = generate_summary(metrics, "Network", "High", [("vpn", 3), ("remote", 2)], sample_df)
-    assert "ANTHROPIC_API_KEY" in summary
-    assert "Network" in summary
-    assert "High" in summary
-    assert "10 incidents" in summary
+@patch('src.summarizer.OpenAI')
+def test_generate_executive_summary_success(mock_openai_class):
+    # Mock the nested client.chat.completions.create() structure
+    mock_client = MagicMock()
+    mock_response = MagicMock()
+    
+    # Configure the mock payload return structure to mimic OpenAI/DeepSeek
+    mock_message = MagicMock()
+    mock_message.content = "This is a successful mock DeepSeek summary of operational incidents."
+    mock_choice = MagicMock()
+    mock_choice.message = mock_message
+    mock_response.choices = [mock_choice]
+    
+    mock_client.chat.completions.create.return_value = mock_response
+    mock_openai_class.return_value = mock_client
+    
+    # Execute test
+    result = generate_executive_summary('[{"ticket_id": "INC001", "description": "Server Down"}]')
+    
+    assert "mock DeepSeek summary" in result
+    mock_client.chat.completions.create.assert_called_once()
